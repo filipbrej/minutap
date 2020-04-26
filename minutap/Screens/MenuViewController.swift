@@ -114,8 +114,14 @@ class MenuViewController: UIViewController {
         
         @objc func presentInstructionsViewController() {
             
+            let blurView = UIVisualEffectView()
+            blurView.frame = view.frame
+            blurView.effect = UIBlurEffect(style: .dark)
+            view.addSubview(blurView)
             let alertVC = InstructionsAlertViewController()
-            self.present(alertVC, animated: true)
+            alertVC.delegate = self
+            alertVC.modalPresentationStyle = .custom
+            self.present(alertVC, animated: true, completion: nil)
         }
         
         
@@ -125,5 +131,17 @@ class MenuViewController: UIViewController {
             present(navController, animated: true)
         }
      
+}
+
+extension MenuViewController: InstructionsAlertVCDelegate {
+    func removeBlurView() {
+        for subview in view.subviews {
+            if subview.isKind(of: UIVisualEffectView.self) {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
+    
 }
 

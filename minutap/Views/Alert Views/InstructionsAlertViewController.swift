@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol InstructionsAlertVCDelegate {
+    func removeBlurView()
+}
+
 // View controller to show how to play the game on the main menu
 class InstructionsAlertViewController: UIViewController {
     
@@ -28,6 +32,8 @@ class InstructionsAlertViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    var delegate: InstructionsAlertVCDelegate?
     
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
@@ -83,7 +89,7 @@ class InstructionsAlertViewController: UIViewController {
     
     func configureMessageLabel() {
         containerView.addSubview(messageLabel)
-        messageLabel.text = "You have one minute to press the button as many times as you can and achieve a high score. \n\nOnce time runs out, you can play again or exit and play again later. \n\nGood luck and have fun!"
+        messageLabel.text = "Press the \"Tap\" button as many times as you can in one minute and achieve a high score. \n\nOnce time runs out, you can play again or exit and play again later. \n\nGood luck and have fun!"
         
         messageLabel.numberOfLines = 0
           
@@ -110,6 +116,7 @@ class InstructionsAlertViewController: UIViewController {
     
     // MARK: - Selector functions
     @objc func dismissViewController() {
+        delegate?.removeBlurView()
         dismiss(animated: true)
     }
 }
