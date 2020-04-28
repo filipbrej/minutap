@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameAlertContainerView: UIView {
+class AlertContainerView: UIView {
 
     
     override init(frame: CGRect) {
@@ -23,8 +23,6 @@ class GameAlertContainerView: UIView {
     private func configure() {
         backgroundColor = .systemPurple
         layer.cornerRadius = 15
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.white.cgColor
         translatesAutoresizingMaskIntoConstraints = false
     }
 }
