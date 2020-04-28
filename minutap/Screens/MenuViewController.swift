@@ -28,7 +28,6 @@ class MenuViewController: UIViewController {
     // Buttons
     let playButton = MenuButton(title: "Play Game", backgroundColor: .systemPurple, fontSize: 30)
     let instructionsButton = MenuButton(title: "How to Play", backgroundColor: .systemPurple, fontSize: 30)
-    let settingsButton = MenuButton(title: "Settings", backgroundColor: .systemPurple, fontSize: 30)
     
     
     var menuButtons: [MenuButton] = []
@@ -45,6 +44,7 @@ class MenuViewController: UIViewController {
 
     func configureNavigationBar() {
         navigationController?.navigationBar.barTintColor = .systemPurple
+        navigationController?.navigationBar.tintColor = .white
     }
     
     
@@ -52,7 +52,6 @@ class MenuViewController: UIViewController {
     func handleButtonsTapped() {
         playButton.addTarget(self, action: #selector(pushGameViewController), for: .touchUpInside)
         instructionsButton.addTarget(self, action: #selector(presentInstructionsViewController), for: .touchUpInside)
-        settingsButton.addTarget(self, action: #selector(presentSettingsViewController), for: .touchUpInside)
     }
     
 //    MARK: - UI Constraints
@@ -62,8 +61,8 @@ class MenuViewController: UIViewController {
         // Add top half view to subview
         view.addSubview(topHalfView)
         // Add buttons to parent view
-        view.addSubviews(playButton, instructionsButton, settingsButton)
-        menuButtons = [playButton, instructionsButton, settingsButton]
+        view.addSubviews(playButton, instructionsButton)
+        menuButtons = [playButton, instructionsButton]
         
         // Set common attributes for each menu button
         for button in menuButtons {
@@ -99,7 +98,6 @@ class MenuViewController: UIViewController {
             // Menu button constraints
             playButton.topAnchor.constraint(equalTo: topHalfView.bottomAnchor, constant: 40),
             instructionsButton.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: padding),
-            settingsButton.topAnchor.constraint(equalTo: instructionsButton.bottomAnchor, constant: padding)
         ])
     }
     
@@ -123,16 +121,10 @@ class MenuViewController: UIViewController {
             alertVC.modalPresentationStyle = .custom
             self.present(alertVC, animated: true, completion: nil)
         }
-        
-        
-        @objc func presentSettingsViewController() {
-            let destinationVC = SettingsViewController()
-            let navController = UINavigationController(rootViewController: destinationVC)
-            present(navController, animated: true)
-        }
-     
 }
 
+
+// MARK: - Extensions
 extension MenuViewController: InstructionsAlertVCDelegate {
     func removeBlurView() {
         for subview in view.subviews {
