@@ -21,10 +21,10 @@ class GameViewController: UIViewController {
     var readySetGoLabel = GamePrimaryLabel(fontSize: 40)
     var hintLabel = GameSecondaryLabel(text: "Press the button below to start.", fontSize: 20)
     
-
+    
     // Buttons
     var increaseScoreButton = ScoreButton(title: "TAP", fontSize: 30.0, backgroundColor: .systemPurple)
-
+    
     //    MARK: - UI Element Values
     // Score values
     private var currentScore: Int = 0
@@ -121,16 +121,6 @@ class GameViewController: UIViewController {
     
     //    MARK: - UI Functions
     
-    // Reset the timer, countdown, and current score
-    func resetGame() {
-        timeLeft = 60
-        countdown = 5
-        currentScore = 0
-        scoreLabel.text = nil
-        setupCountdownTimer()
-    }
-    
-    
     // Change background color of time remaining label depending on amount of time left (changes every 20 seconds)
     func changeTimeRemainingLabel() {
         if (timeLeft <= 40 && timeLeft > 20) {
@@ -183,6 +173,22 @@ class GameViewController: UIViewController {
     }
     
     
+    func presentGameOverViewController() {
+        let blurView = UIVisualEffectView()
+        blurView.frame = view.frame
+        blurView.effect = UIBlurEffect(style: .dark)
+        view.addSubview(blurView)
+        let alertVC = GameOverAlertViewController()
+        alertVC.delegate = self
+        alertVC.modalPresentationStyle = .custom
+        self.present(alertVC, animated: true, completion: nil)
+        
+        alertVC.playAgainButton.addTarget(self, action: #selector(resetGame), for: .touchUpInside)
+        alertVC.messageLabel.text = "Your total score is \(currentScore).\nCare to play again?"
+        
+    }
+    
+    
     //    MARK: - Selectors
     @objc func fireCountdownTimer() {
         countdown -= 1
@@ -209,19 +215,7 @@ class GameViewController: UIViewController {
         
         // Stop timer and disable button when timer reaches 0
         if (timeLeft == 0) {
-            
-            #warning("Add different alert when you beat your high score")
-            #warning("Create a custom alert controller view")
-            let alertController = UIAlertController(title: "Time's Up!", message: "Your score is \(currentScore). Care to play again?", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-            alertController.addAction(UIAlertAction(title: "Play Again", style: .default, handler: {(action) in
-                // Reset the game
-                self.resetGame()
-                self.setLabelsText()
-            }))
-            present(alertController, animated: true, completion: nil)
-            
-            
+            presentGameOverViewController()
             disableIncreaseScoreButton()
             roundTimer?.invalidate()
         }
@@ -258,5 +252,28 @@ class GameViewController: UIViewController {
         let highScoreDefault = UserDefaults.standard
         highScoreDefault.setValue(highScore, forKey: "Highscore")
         highScoreDefault.synchronize()
+    }
+    
+    // Reset the timer, countdown, and current score
+    @objc func resetGame() {
+        timeLeft = 60
+        countdown = 5
+        currentScore = 0
+        scoreLabel.text = nil
+        setupCountdownTimer()
+        setLabelsText()
+    }
+    
+}
+
+// MARK: - Extensions
+
+extension GameViewController: GameOverAlertVCDelegate {
+    func removeBlurView() {
+        for subview in view.subviews {
+            if subview.isKind(of: UIVisualEffectView.self) {
+                subview.removeFromSuperview()
+            }
+        }
     }
 }
