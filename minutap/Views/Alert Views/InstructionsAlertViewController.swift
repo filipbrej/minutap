@@ -12,10 +12,11 @@ protocol InstructionsAlertVCDelegate {
     func removeBlurView()
 }
 
-// View controller to show how to play the game on the main menu
+// Alert that pops up to show the instructions
 class InstructionsAlertViewController: UIViewController {
     
-    let containerView = GameAlertContainerView()
+    // MARK: - UI Elements
+    let containerView = AlertContainerView()
     let titleView = UIView()
     
     let titleLabel = AlertTitleLabel(fontSize: 30, textAlignment: .center)
@@ -25,7 +26,6 @@ class InstructionsAlertViewController: UIViewController {
     // MARK: - Initializers
     init() {
         super.init(nibName: nil, bundle: nil)
-
     }
     
     
@@ -105,12 +105,14 @@ class InstructionsAlertViewController: UIViewController {
     func configureActionButton() {
         containerView.addSubview(actionButton)
         actionButton.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
-    
+        
         NSLayoutConstraint.activate([
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -20),
             actionButton.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             actionButton.heightAnchor.constraint(equalToConstant: 45),
-            actionButton.widthAnchor.constraint(equalToConstant: 200)
+            actionButton.widthAnchor.constraint(equalToConstant: 200),
+            
+            
         ])
     }
     
