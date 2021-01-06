@@ -230,6 +230,11 @@ class GameViewController: UIViewController {
         increaseScoreButton.pulsate()
         scoreLabel.expand()
         
+        // Haptic feedback
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+        
         // Adjust scores
         currentScore += 1
         scoreLabel.text = "\(currentScore)"
@@ -240,6 +245,9 @@ class GameViewController: UIViewController {
             highScoreLabel.expand()
             highScore = currentScore
             highScoreLabel.text = "High Score: \(highScore)"
+            let highScoreGenerator = UIImpactFeedbackGenerator(style: .medium)
+            highScoreGenerator.prepare()
+            generator.impactOccurred()
         }
         
         

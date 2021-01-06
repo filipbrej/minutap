@@ -14,7 +14,7 @@ class MenuViewController: UIViewController {
     
     // Labels
     let titleLabel = MenuPrimaryLabel(text: "MINUTAP", fontSize: 50.0)
-    let footerLabel = MenuSecondaryLabel(text: "Designed & Developed by Fi Studios", fontSize: 16.0)
+    let footerLabel = MenuSecondaryLabel(text: "Designed & Developed by Filip Brej", fontSize: 16.0)
     
     // Top half view
     let topHalfView: UIView = {
@@ -25,7 +25,7 @@ class MenuViewController: UIViewController {
         return view
     }()
     
-    // Buttons
+    // Buttons 
     let playButton = MenuButton(title: "Play Game", backgroundColor: .systemPurple, fontSize: 30)
     let instructionsButton = MenuButton(title: "How to Play", backgroundColor: .systemPurple, fontSize: 30)
     
@@ -69,7 +69,7 @@ class MenuViewController: UIViewController {
             NSLayoutConstraint.activate([
                 button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 button.heightAnchor.constraint(equalToConstant: 50),
-                button.widthAnchor.constraint(equalToConstant: 300)
+                button.widthAnchor.constraint(equalToConstant: 200)
             ])
         }
         
